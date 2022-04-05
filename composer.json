@@ -1,7 +1,7 @@
 {
-  "name": "stmswitcher/yii2-ldap-auth",
+  "name": "mindcontact-dev/yii2-ldap-auth",
   "license": "MIT",
-  "description": "Simple library to handle auth over LDAP in Yii 2 applications.",
+  "description": "Simple library to handle auth over LDAP in Yii 2 applications. Forked from stmswitcher/yii2-ldap-auth",
   "keywords": ["yii2", "extension", "ldap", "auth"],
   "type": "yii2-extension",
   "require": {
@@ -12,11 +12,15 @@
     {
       "name": "Denis Alexandrov",
       "email": "stm.switcher@gmail.com"
+    },
+    {
+      "name": "MindContact | Roberto Luttino",
+      "email": "oss@mindcontact.net"
     }
   ],
   "autoload": {
     "psr-4": {
-      "stmswitcher\\Yii2LdapAuth\\": "src/"
+      "mindcontact-dev\\Yii2LdapAuth\\": "src/"
     }
   }
 }
