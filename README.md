@@ -6,7 +6,7 @@ Simple extension to handle auth over LDAP in Yii 2 applications.
 # Installation
 
 ```shell script
-composer require "stmswitcher/yii2-ldap-auth"
+composer require "mindcontact-dev/yii2-ldap-auth"
 ```
 
 # Example of configuration and a use case
@@ -17,7 +17,7 @@ Considering [yii2-app-basic](https://github.com/yiisoft/yii2-app-basic):
 'components' => [
     ...
     'ldapAuth' => [
-        'class' => '\stmswitcher\Yii2LdapAuth\LdapAuth',
+        'class' => '\mindcontact-dev\Yii2LdapAuth\LdapAuth',
         'host' => 'your-ldap-hostname',
         'baseDn' => 'dc=work,dc=group',
         'searchUserName' => '<username for a search user>',
@@ -36,14 +36,14 @@ Considering [yii2-app-basic](https://github.com/yiisoft/yii2-app-basic):
     ...
     
     'user' => [
-        'identityClass' => '\stmswitcher\Yii2LdapAuth\Model\LdapUser',
+        'identityClass' => '\mindcontact-dev\Yii2LdapAuth\Model\LdapUser',
     ],
     ...
 ]
 ```
 ### Update methods in LoginForm class
 ```php
-use stmswitcher\Yii2LdapAuth\Model\LdapUser;
+use mindcontact-dev\Yii2LdapAuth\Model\LdapUser;
 
 ...
 
