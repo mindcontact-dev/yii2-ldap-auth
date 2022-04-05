@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace stmswitcher\Yii2LdapAuth\Model;
+namespace MindContact\Yii2LdapAuth\Model;
 
-use stmswitcher\Yii2LdapAuth\Exception\Yii2LdapAuthException;
+use MindContact\Yii2LdapAuth\Exception\Yii2LdapAuthException;
 use Yii;
 use yii\base\BaseObject;
 use yii\web\IdentityInterface;
@@ -11,7 +11,7 @@ use yii\web\IdentityInterface;
 /**
  * LDAP user model.
  *
- * @package stmswitcher\Yii2LdapAuth\Model
+ * @package MindContact\Yii2LdapAuth\Model
  * @author Denis Alexandrov <stm.switcher@gmail.com>
  * @date 30.06.2020
  */

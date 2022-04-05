@@ -6,7 +6,7 @@ Simple extension to handle auth over LDAP in Yii 2 applications.
 # Installation
 
 ```shell script
-composer require "mindcontact-dev/yii2-ldap-auth"
+composer require "mindcontact-dev/yii2-ldap-auth:master"
 ```
 
 # Example of configuration and a use case

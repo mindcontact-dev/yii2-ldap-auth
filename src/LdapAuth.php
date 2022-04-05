@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace stmswitcher\Yii2LdapAuth;
+namespace MindContact\Yii2LdapAuth;
 
-use stmswitcher\Yii2LdapAuth\Exception\Yii2LdapAuthException;
+use MindContact\Yii2LdapAuth\Exception\Yii2LdapAuthException;
 use yii\base\Component;
 
 /**
  * Connector to LDAP server.
  *
- * @package stmswitcher\Yii2LdapAuth\Components
+ * @package MindContact\Yii2LdapAuth\Components
  * @author Denis Alexandrov <stm.switcher@gmail.com>
  * @date 30.06.2020
  */

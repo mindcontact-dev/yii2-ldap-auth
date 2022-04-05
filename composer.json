@@ -20,7 +20,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "mindcontact-dev\\Yii2LdapAuth\\": "src/"
+      "MindContact\\Yii2LdapAuth\\": "src/"
     }
   }
 }
