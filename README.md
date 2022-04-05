@@ -6,7 +6,7 @@ Simple extension to handle auth over LDAP in Yii 2 applications.
 # Installation
 
 ```shell script
-composer require "mindcontact-dev/yii2-ldap-auth:master"
+composer require "MindContact/yii2-ldap-auth:master"
 ```
 
 # Example of configuration and a use case
@@ -17,7 +17,7 @@ Considering [yii2-app-basic](https://github.com/yiisoft/yii2-app-basic):
 'components' => [
     ...
     'ldapAuth' => [
-        'class' => '\mindcontact-dev\Yii2LdapAuth\LdapAuth',
+        'class' => '\MindContact\Yii2LdapAuth\LdapAuth',
         'host' => 'your-ldap-hostname',
         'baseDn' => 'dc=work,dc=group',
         'searchUserName' => '<username for a search user>',
@@ -36,14 +36,14 @@ Considering [yii2-app-basic](https://github.com/yiisoft/yii2-app-basic):
     ...
     
     'user' => [
-        'identityClass' => '\mindcontact-dev\Yii2LdapAuth\Model\LdapUser',
+        'identityClass' => '\MindContact\Yii2LdapAuth\Model\LdapUser',
     ],
     ...
 ]
 ```
 ### Update methods in LoginForm class
 ```php
-use mindcontact-dev\Yii2LdapAuth\Model\LdapUser;
+use MindContact\Yii2LdapAuth\Model\LdapUser;
 
 ...
 
