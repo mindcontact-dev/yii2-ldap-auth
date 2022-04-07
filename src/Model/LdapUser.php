@@ -125,7 +125,7 @@ class LdapUser extends BaseObject implements IdentityInterface
         }
 
         return new static([
-            'Id' => $user['uid'][0],
+            'Id' => $user['cn'][0],
             'Username' => $user['displayname'][0],
             'Email' => $user['mail'][0],
             'Dn' => $user['dn'],
@@ -147,7 +147,7 @@ class LdapUser extends BaseObject implements IdentityInterface
      */
     public function getAuthKey()
     {
-        throw new Yii2LdapAuthException('Auth keys are not supported');
+        return $this->id;
     }
 
     /**
@@ -156,6 +156,6 @@ class LdapUser extends BaseObject implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        throw new Yii2LdapAuthException('Auth keys are not supported');
+        return $this->getAuthKey() === $authKey;
     }
 }
