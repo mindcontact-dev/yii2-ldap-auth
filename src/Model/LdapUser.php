@@ -37,6 +37,8 @@ class LdapUser extends BaseObject implements IdentityInterface
      */
     private $dn;
 
+    private $groups;
+
     /**
      * LdapUser constructor.
      *
@@ -112,6 +114,22 @@ class LdapUser extends BaseObject implements IdentityInterface
     }
 
     /**
+     * @return array
+     */
+    public function getGroups(): array
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param string $groups
+     */
+    public function setGroups(array $groups): void
+    {
+        $this->groups = $groups;
+    }
+
+    /**
      * @param int|string $uid
      *
      * @return IdentityInterface|null
@@ -129,6 +147,7 @@ class LdapUser extends BaseObject implements IdentityInterface
             'Username' => $user['displayname'][0],
             'Email' => $user['mail'][0],
             'Dn' => $user['dn'],
+            'Groups' => $user['groups']
         ]);
     }
 

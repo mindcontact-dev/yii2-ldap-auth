@@ -147,12 +147,20 @@ class LdapAuth extends Component
         $result = ldap_search(
             $this->getConnection(),
             $this->baseDn,
-            '(&(objectClass=' . $this->ldapObjectClass . ')(' . $this->loginAttribute . '=' . $uid . '))'
+            '(&(objectClass=' . $this->ldapObjectClass . ')(' . $this->loginAttribute . '=' . $uid . '))',
+            array("cn", "displayname", "mail", "dn", "memberof", "primarygroupid")
         );
 
         $entries = ldap_get_entries($this->getConnection(), $result);
 
-        return $entries[0] ?? null;
+        if (!isset($entries) || !count($entries) === 0) {
+            return null;
+        }
+
+        $user = $entries[0];
+        $user['groups'] = $this->getGroups($user);
+
+        return $user;
     }
 
     /**
@@ -201,5 +209,41 @@ class LdapAuth extends Component
         }
 
         return false;
+    }
+
+    /**
+     * Get groups for user
+     * from https://varunver.wordpress.com/2018/03/07/php-ldap-authentication-and-getting-ldap-user-groups-for-user/
+     */
+    function getGroups($user) {
+        // Get groups and primary group token
+        $output = $user['memberof'];
+        $token = isset($user['primarygroupid']) ? $user['primarygroupid'][0] : null;
+
+        // Remove extraneous first entry i.e. the count of the groups the user belongs to
+        array_shift($output);
+
+        // We need to look up the primary group, get list of all groups
+        $results2 = ldap_search(
+            $this->getConnection(),
+            $this->baseDn,
+            "(objectcategory=group)",
+            array("distinguishedname", "primarygrouptoken"));
+        $entries2 = ldap_get_entries($this->getConnection(), $results2);
+
+        // Remove extraneous first entry
+        array_shift($entries2);
+
+        // Loop through and find group with a matching primary group token
+        foreach($entries2 as $e) {
+            if($e['primarygrouptoken'][0] == $token) {
+                // Primary group found, add it to output array
+                $output[] = $e['distinguishedname'][0];
+                // Break loop
+                break;
+            }
+        }
+
+        return $output;
     }
 }
