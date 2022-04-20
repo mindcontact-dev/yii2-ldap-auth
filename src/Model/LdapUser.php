@@ -37,7 +37,11 @@ class LdapUser extends BaseObject implements IdentityInterface
      */
     private $dn;
 
-    private $groups;
+    private $roles;
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_OPERATOR = 'operator';
+    const ROLE_USER = 'user';
 
     /**
      * LdapUser constructor.
@@ -116,17 +120,17 @@ class LdapUser extends BaseObject implements IdentityInterface
     /**
      * @return array
      */
-    public function getGroups(): array
+    public function getRoles(): array
     {
-        return $this->groups;
+        return $this->roles;
     }
 
     /**
-     * @param string $groups
+     * @param string $roles
      */
-    public function setGroups(array $groups): void
+    public function setRoles(array $roles): void
     {
-        $this->groups = $groups;
+        $this->roles = $roles;
     }
 
     /**
@@ -147,7 +151,7 @@ class LdapUser extends BaseObject implements IdentityInterface
             'Username' => $user['displayname'][0],
             'Email' => $user['mail'][0],
             'Dn' => $user['dn'],
-            'Groups' => $user['groups']
+            'Roles' => $user['roles']
         ]);
     }
 
@@ -176,5 +180,16 @@ class LdapUser extends BaseObject implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
+    }
+
+    public function isAdmin()
+    {
+        return $this->isInRole(self::ROLE_ADMIN);
+    }
+
+    public function isInRole($role)
+    {
+        $roles = $this->getRoles();
+        return isset($roles) && is_numeric(array_search($role, $roles));
     }
 }

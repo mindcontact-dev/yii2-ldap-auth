@@ -83,6 +83,8 @@ class LdapAuth extends Component
      */
     public $connectTimeout = self::DEFAULT_CONNECT_TIMEOUT;
 
+    public $roleMappings;
+
     /**
      * @var resource|false
      */
@@ -152,13 +154,13 @@ class LdapAuth extends Component
         );
 
         $entries = ldap_get_entries($this->getConnection(), $result);
-
+// var_dump($entries);
         if (!isset($entries) || !count($entries) === 0) {
             return null;
         }
 
         $user = $entries[0];
-        $user['groups'] = $this->getGroups($user);
+        $user['roles'] = $this->getRoles($user);
 
         return $user;
     }
@@ -215,7 +217,7 @@ class LdapAuth extends Component
      * Get groups for user
      * from https://varunver.wordpress.com/2018/03/07/php-ldap-authentication-and-getting-ldap-user-groups-for-user/
      */
-    function getGroups($user) {
+    function getRoles($user) {
         // Get groups and primary group token
         $output = $user['memberof'];
         $token = isset($user['primarygroupid']) ? $user['primarygroupid'][0] : null;
@@ -244,6 +246,16 @@ class LdapAuth extends Component
             }
         }
 
-        return $output;
+        // Map to roles
+        $roles = [];
+        foreach($output as $ldapGroup) {
+            foreach ($this->roleMappings as $key => $value) {
+                if (($ldapGroup == $key) && (!isset($roles[$value]))) {
+                    $roles[] = $value;
+                }
+            }
+        }
+        // var_dump($roles);
+        return $roles;
     }
 }
