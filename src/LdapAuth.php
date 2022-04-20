@@ -150,7 +150,7 @@ class LdapAuth extends Component
             $this->getConnection(),
             $this->baseDn,
             '(&(objectClass=' . $this->ldapObjectClass . ')(' . $this->loginAttribute . '=' . $uid . '))',
-            array("cn", "displayname", "mail", "dn", "memberof", "primarygroupid")
+            array("cn", "name", "displayname", "mail", "dn", "memberof", "primarygroupid")
         );
 
         $entries = ldap_get_entries($this->getConnection(), $result);
@@ -219,12 +219,15 @@ class LdapAuth extends Component
      */
     function getRoles($user) {
         // Get groups and primary group token
+		if (!isset($user['memberof'])) {
+			return [];
+		}
         $output = $user['memberof'];
         $token = isset($user['primarygroupid']) ? $user['primarygroupid'][0] : null;
 
         // Remove extraneous first entry i.e. the count of the groups the user belongs to
         array_shift($output);
-
+/*
         // We need to look up the primary group, get list of all groups
         $results2 = ldap_search(
             $this->getConnection(),
@@ -245,7 +248,7 @@ class LdapAuth extends Component
                 break;
             }
         }
-
+*/
         // Map to roles
         $roles = [];
         foreach($output as $ldapGroup) {
