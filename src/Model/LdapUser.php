@@ -182,7 +182,7 @@ class LdapUser extends BaseObject implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
-    public function isAdmin()
+    public function getIsAdmin()
     {
         return $this->isInRole(self::ROLE_ADMIN);
     }
@@ -191,5 +191,15 @@ class LdapUser extends BaseObject implements IdentityInterface
     {
         $roles = $this->getRoles();
         return isset($roles) && is_numeric(array_search($role, $roles));
+    }
+
+    public static function getCurrentIdentity() {
+        if (!Yii::$app->ldapAuth->isEnabled) {
+            return new LdapUser(Yii::$app->ldapAuth->demoUser);
+        }
+
+        return new LdapUser(Yii::$app->user->identity);
+        // TODO Da verificare
+        // $userHelper->setRoles(Yii::$app->user->identity->getRoles());
     }
 }

@@ -18,25 +18,39 @@ Considering [yii2-app-basic](https://github.com/yiisoft/yii2-app-basic):
     ...
     'ldapAuth' => [
         'class' => '\MindContact\Yii2LdapAuth\LdapAuth',
-        'host' => 'your-ldap-hostname',
-        'baseDn' => 'dc=work,dc=group',
-        'searchUserName' => '<username for a search user>',
-        'searchUserPassword' => '<password for a search user>',
+        'host' => 'ldap-server',
+        'baseDn' => 'dc=shihadeh,dc=intern',
+        'searchUserName' => 'cn=admin,dc=shihadeh,dc=intern',
+        'searchUserPassword' => 'test1234',
 
         // optional parameters and their default values
         'ldapVersion' => 3,             // LDAP version
-        'protocol' => 'ldaps://',       // Protocol to use           
+        'protocol' => 'ldap://',       // Protocol to use           
         'followReferrals' => false,     // If connector should follow referrals
-        'port' => 636,                  // Port to connect to
-        'loginAttribute' => 'uid',      // Identifying user attribute to look up for
-        'ldapObjectClass' => 'person',  // Class of user objects to look up for
+        'port' => 389,                  // Port to connect to
+        'loginAttribute' => 'cn',      // Identifying user attribute to look up for
+        'ldapObjectClass' => 'inetOrgPerson',  // Class of user objects to look up for
         'timeout' => 10,                // Operation timeout, seconds
         'connectTimeout' => 5,          // Connect timeout, seconds
+        'roleMappings' => [
+            'cn=Admins,ou=Groups,dc=shihadeh,dc=intern' => 'admin',
+            'cn=Maintaners,ou=Groups,dc=shihadeh,dc=intern' => 'operator',
+        ],
+        'isEnabled' => false,
+        'demoUser' => [
+            'Id' => 'demo.user',
+            'Username' => 'Demo User',
+            'Email' => 'demo.user@demo.com',
+            'Dn' => 'cn=demo_user,dc=shihadeh,dc=intern',
+            'Roles' => ['admin']
+        ]
     ],
     ...
     
     'user' => [
         'identityClass' => '\MindContact\Yii2LdapAuth\Model\LdapUser',
+        'enableSession' => true,
+        'enableAutoLogin' => true,
     ],
     ...
 ]

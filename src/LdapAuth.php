@@ -85,6 +85,10 @@ class LdapAuth extends Component
 
     public $roleMappings;
 
+    public $isEnabled = true;
+
+    public $demoUser = null;
+
     /**
      * @var resource|false
      */
